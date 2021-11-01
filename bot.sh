@@ -1,23 +1,22 @@
 #!/bin/bash
-
-char="█"
 input=$1
 
 count=0
-while read -N1 char; do
-  printf "$char" | xclip -i -selection clipboard
-  xdotool key --clearmodifiers "ctrl+shift+v"
-  if [[ $char == *$'\n'* ]]; then
-    while [ $count -gt 0 ]; do
-      echo $count
-      xdotool key Left
-      ((count--))
-      sleep 0.01
-    done
-  else 
+while IFS= read -r line; do
+  for (( i=0; i<${#line}; i++ )); do
+    char=${line:$i:1}
+    printf "$char" | xclip -i -selection clipboard
+    xdotool key --clearmodifiers "ctrl+v"
     ((count++))
-  fi
-
-  sleep 0.01
+    sleep 0.001
+  done
+  printf "\n" | xclip -i -selection clipboard
+  xdotool key --clearmodifiers "ctrl+v"
+  while [ $count -gt 0 ]; do
+    echo $count
+    xdotool key Left
+    ((count--))
+    sleep 0.001
+  done
 done < $input
 
