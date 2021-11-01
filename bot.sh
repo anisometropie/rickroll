@@ -1,7 +1,7 @@
 #!/bin/bash
 
 char="█"
-input="rick"
+input=$1
 
 count=0
 while read -N1 char; do
