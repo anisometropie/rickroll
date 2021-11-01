@@ -10,6 +10,7 @@ minimumLength=50
 printLine () {
   local line=$1
   local trailingLength=$(($minimumLength - ${#line}))
+  trailingLength=$(( trailingLength > 0 ? trailingLength : 0 ))
   local trailingSpaces=$(head -c "$trailingLength" < /dev/zero | tr '\0' ' ')
   line="$line$trailingSpaces"
   for (( i=0; i<${#line}; i++ )); do
