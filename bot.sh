@@ -6,9 +6,13 @@ printChar () {
   xdotool key --clearmodifiers "ctrl+v"
 }
 
+minimumLength=50
 printLine () {
   local line=$1
-    for (( i=0; i<${#line}; i++ )); do
+  local trailingLength=$(($minimumLength - ${#line}))
+  local trailingSpaces=$(head -c "$trailingLength" < /dev/zero | tr '\0' ' ')
+  line="$line$trailingSpaces"
+  for (( i=0; i<${#line}; i++ )); do
     char=${line:$i:1}
     printChar "$char"
     ((count++))
