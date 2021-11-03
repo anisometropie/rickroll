@@ -1,9 +1,11 @@
 #!/bin/bash
 input=$1
+fillWhileSpace=${2:-true}
+minimumLength==${3:-0}
 
 printChar () {
   local char="$1"
-  if [[ "$char" =~ [[:space:]] ]] || [[ "$char" =~ [⠀] ]]; then
+  if { [[ "$char" =~ [[:space:]] ]] || [[ "$char" =~ [⠀] ]]; } && [ fillWhileSpace == true ]; then
     xdotool key Right
   else
     printf "$1" | xclip -i -selection clipboard
@@ -11,7 +13,6 @@ printChar () {
   fi
 }
 
-minimumLength=50
 printLine () {
   local line="$1"
   local trailingLength=$(($minimumLength - ${#line}))
