@@ -1,11 +1,11 @@
 #!/bin/bash
 input=$1
-fillWhileSpace=${2:-true}
-minimumLength==${3:-0}
+printWhiteSpaces=${2:-true}
+minimumLength=${3:-0}
 
 printChar () {
   local char="$1"
-  if { [[ "$char" =~ [[:space:]] ]] || [[ "$char" =~ [⠀] ]]; } && [ fillWhileSpace == true ]; then
+  if { [[ "$char" =~ [[:space:]] ]] || [[ "$char" =~ [⠀] ]]; } && [ printWhiteSpaces == false ]; then
     xdotool key Right
   else
     printf "$1" | xclip -i -selection clipboard
